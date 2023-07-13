@@ -1,3 +1,4 @@
+import ConvexClientProvider from './ConvexClientProvider'
 import './globals.css'
 import { Inter, Poppins, Luckiest_Guy } from 'next/font/google'
 
@@ -18,7 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        <ConvexClientProvider>
+          {children}
+        </ConvexClientProvider>
+      </body>
     </html>
   )
 }
