@@ -1,6 +1,6 @@
 import { mutation, query } from "./_generated/server";
 
-export const get = query(async ({ db }) => {
+export const getDogs = query(async ({ db }) => {
   return await db.query("dogs").collect();
 });
 

@@ -1,6 +1,4 @@
-.main{
-    flex: 1;
+.platformContainer{
     display: flex;
     justify-content: center;
-    align-items: center;
-  }
+}
