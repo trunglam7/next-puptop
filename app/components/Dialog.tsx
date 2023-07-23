@@ -3,6 +3,7 @@ import styles from '../styles/dialog.module.css'
 import { dialogContext } from '../page';
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
+import { generateUploadUrl } from '@/convex/messages';
 
 export default function Dialog() {
 
@@ -12,21 +13,33 @@ export default function Dialog() {
   const dogImageInput = useRef<HTMLInputElement>(null);
 
   const addDog = useMutation(api.dogs.addDog);
+  const generateUploadUrl = useMutation(api.messages.generateUploadUrl);
+  const sendImage = useMutation(api.messages.sendImage);
 
   const addDogHandler = async () => {
 
-    await addDog({name: dogName, score: 0, image: "duhuwhduwdhudwh"});
-
-    const sendImageUrl = new URL(`${process.env.NEXT_PUBLIC_CONVEX_URL!}/${dogName}`);
-
-    await fetch(sendImageUrl, {
+    const postUrl = await generateUploadUrl();
+    const result = await fetch(postUrl, {
       method: "POST",
-      headers: {"Content-Type": dogImage!.type},
+      headers: { "Content-Type": dogImage!.type },
       body: dogImage
     });
 
+    const json = await result.json();
+
+    if(!result.ok){
+      throw new Error(`Upload failed: ${JSON.stringify(json)}`);
+    }
+    const {storageId} = json;
+
+    await sendImage({storageId});
+    await addDog({name: dogName, score: 0, image: storageId});
+
+
     setDogImage(null);
     dogImageInput.current!.value = "";
+    setDialogState(false);
+
   }
 
   const closeDialog = () => {
