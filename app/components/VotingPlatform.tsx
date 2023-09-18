@@ -5,7 +5,6 @@ import DogCard from './DogCard';
 import styles from '../styles/votingPlatform.module.css';
 
 export default function VotingPlatform() {
-    
     const dogs = useQuery(api.dogs.getDogs);
     const data = useQuery(api.messages.list);
 

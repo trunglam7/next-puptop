@@ -4,6 +4,7 @@ import { dialogContext } from '../page';
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { generateUploadUrl } from '@/convex/messages';
+import {FcAddImage} from 'react-icons/fc'
 
 export default function Dialog() {
 
@@ -56,12 +57,14 @@ export default function Dialog() {
           </div>
 
           <div className={styles.inputContainer}>
-            <label htmlFor='dog-image'>Dog Image</label>
-            <input type='file' id='dog-image' ref={dogImageInput} onChange={e => setDogImage(e.target.files![0])}></input>
+            <label htmlFor='dog-image' style={{cursor: 'pointer'}}><FcAddImage size={'3rem'}/></label>
+            <input style={{display: 'none'}} type='file' id='dog-image' ref={dogImageInput} onChange={e => setDogImage(e.target.files![0])}></input>
           </div>
 
-          <button onClick={addDogHandler}>Submit</button>
-          <button onClick={closeDialog}>Close</button>
+          <div className={styles.buttonContainer}>
+            <button onClick={addDogHandler}>Submit</button>
+            <button onClick={closeDialog}>Close</button>
+          </div>
         </div>
       </div>
     </dialog>

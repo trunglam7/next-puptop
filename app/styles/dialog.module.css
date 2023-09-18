@@ -32,3 +32,8 @@
     display: grid;
     place-items: center;
 }
+
+.buttonContainer{
+    display: flex;
+    column-gap: 1rem;
+}
